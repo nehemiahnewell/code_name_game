@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spy</title>
+    <link rel="stylesheet" type="text/css" href="{% static "css/spystyle.css" %}">
+</head>
+<body>
+<div class="blue_col">
+    <fieldset>
+        <legend>Blue Team:</legend>
+        <h2>{{ blue_team.spies_left }}</h2>
+        <ul>
+            {% for hint in blue_hints.reverse %}
+                <li>{{ hint.clue }}: {{ hint.num_of_cards }}</li>
+            {% endfor %}
+        </ul>
+    </fieldset>
+</div>
+<div class="game_state">
+    <fieldset class="{%  if turn.active_team.is_blue == True %} blue_turn {% else %} red_turn {% endif %}">
+        <legend>Current team:</legend>
+        <h1>{%  if turn.active_team.is_blue == True %}
+            Blue Team's
+            {% else %}
+            Red Team's
+            {% endif %}
+            remaining moves: <br /> {{ turn.guesses_allowed }}
+        </h1>
+        {% if moved.moved == True %}
+            <form method="post" style="width: auto;">
+                <label for="value">To end turn: </label>
+                <input type="submit" name="value" value="end" style="display: inline; position: static;">
+            </form>
+        {% endif %}
+    </fieldset>
+    <table>
+    {% for card in game_board.all %}
+        {% if forloop.counter == 6 or forloop.counter == 11 or forloop.counter == 16 or forloop.counter == 21 %}
+            <tr>
+        {% endif %}
+        <td {% if card.selected == True %} class="{{ card.card_type }}"{% endif %}>{{ card.word }}</td>
+    {% endfor %}
+</table>
+
+</div>
+<div class="red_col">
+        <fieldset>
+            <legend>Red Team:</legend>
+            <h2>{{ red_team.spies_left }}</h2>
+            <ul>
+                {% for hint in red_hints.reverse %}
+                    <li>{{ hint.clue }}: {{ hint.num_of_cards }}</li>
+                {% endfor %}
+            </ul>
+        </fieldset>
+</div>
+<script>
+    {% if turn.guesses_allowed == 0 %}
+        setInterval(reload, 5000);
+
+        function reload()
+        {
+            location.replace("/../spy/")
+        }
+    {% endif %}
+    {% if turn.guesses_allowed != 0 %}
+
+        function overWatch(e)
+        {
+            if(!e.target.hasAttribute('class')) {
+                handoff = e.target.innerHTML;
+                console.log(handoff);
+                post("/../spy/", {value: handoff})
+            }
+        }
+
+        var tiles = document.getElementsByTagName('table');
+        tiles[0].addEventListener("click",overWatch, false);
+
+        function post(path, params, method)
+        {
+            method = method || "post"; // Set method to post by default if not specified.
+
+            // The rest of this code assumes you are not using a library.
+            // It can be made less wordy if you use one.
+            var form = document.createElement("form");
+            form.setAttribute("method", method);
+            form.setAttribute("action", path);
+
+            for(var key in params) {
+                if(params.hasOwnProperty(key)) {
+                    var hiddenField = document.createElement("input");
+                    hiddenField.setAttribute("type", "hidden");
+                    hiddenField.setAttribute("name", key);
+                    hiddenField.setAttribute("value", params[key]);
+
+                    form.appendChild(hiddenField);
+                 }
+        }
+
+    document.body.appendChild(form);
+    form.submit();
+    }
+    {% endif %}
+
+</script>
+</body>
+</html>

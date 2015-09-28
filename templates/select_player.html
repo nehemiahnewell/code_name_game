@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %} Select Player {% endblock %}
+
+{% block main_content %}
+  <form>
+      <input type="button" value="SPYMASTER" id="select_spymaster" onclick="location.assign('/../spymaster/')">
+      <input type="button" value="SPY" id="select_spy" onclick="location.assign('/../spy/')">
+  </form>
+{% endblock %}

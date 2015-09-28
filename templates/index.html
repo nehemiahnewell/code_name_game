@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %} Game Status {% endblock %}
+
+{% block main_content %}
+  <form class="first" action="{% url 'select_player' %}">
+    <input type="submit" value="ENTER GAME" id="enter">
+  </form>
+
+  <form class="second" method="POST">{% csrf_token %}
+    <input name='start' type="submit" value="start" id="restart">
+    <input name='start' type="submit" value="reset">
+  </form>
+  <span id="{{ game }}"></span>
+
+
+
+{% endblock %}
+
+{% block js_scripts %}
+  <script type="text/javascript" src="{% static "js/index.js" %}"></script>
+{% endblock %}

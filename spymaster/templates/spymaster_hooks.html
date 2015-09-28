@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spymaster</title>
+    <link rel="stylesheet" type="text/css" href="{% static "css/spystyle.css" %}">
+</head>
+<body>
+<div class="blue_col">
+<form method="post">{% csrf_token %}
+    <fieldset>
+        <legend>Blue Team:</legend>
+        <label for="clue">Clue</label><input type="text" name="clue" placeholder="Clue" class="{% if turn.active_team.is_blue == True and turn.guesses_allowed == 0 %} blue_turn {% endif %}" required> <br/>
+        <label for="moves">Moves</label><input type="number" min="1" max="8" name="moves" placeholder="Moves" class="{% if turn.active_team.is_blue == True and turn.guesses_allowed == 0 %} blue_turn {% endif %}" required>
+        <br/>
+        <h2>{{ blue_team.spies_left }}</h2>
+        <ul>
+            {% for hint in blue_hints.reverse %}
+                <li>{{ hint.clue }}: {{ hint.num_of_cards }}</li>
+            {% endfor %}
+        </ul>
+        <input type="submit" value="Blue Team Hint" class="{% if turn.active_team.is_blue == True and turn.guesses_allowed == 0 %} blue_turn {% endif %}">
+    </fieldset>
+</form>
+</div>
+<div class="game_state">
+    <fieldset class="{%  if turn.active_team.is_blue == True %} blue_turn {% else %} red_turn {% endif %}">
+        <legend>Current team:</legend>
+        <h1>{%  if turn.active_team.is_blue == True %}
+            Blue Team's
+            {% else %}
+            Red Team's
+            {% endif %}
+            remaining moves: <br /> {{ turn.guesses_allowed }}
+        </h1>
+    </fieldset>
+    <table>
+    {% for card in game_board.all %}
+        {% if forloop.counter == 6 or forloop.counter == 11 or forloop.counter == 16 or forloop.counter == 21 %}
+            <tr>
+        {% endif %}
+        <td class="{% if card.selected == True %} selected {% endif %}{{ card.card_type }}">{{ card.word }}</td>
+    {% endfor %}
+</table>
+</div>
+<div class="red_col">
+    <form method="post">{% csrf_token %}
+        <fieldset>
+            <legend>Red Team:</legend>
+            <label for="clue">Clue</label><input type="text" name="clue" placeholder="Clue" class="{% if turn.active_team.is_blue == False and turn.guesses_allowed == 0 %} red_turn {% endif %}" required> <br/>
+            <label for="moves">Moves</label><input type="number" min="1" max="8" name="moves" placeholder="Moves" class="{% if turn.active_team.is_blue == False and turn.guesses_allowed == 0 %} red_turn {% endif %}" required>
+            <br/>
+            <h2>{{ red_team.spies_left }}</h2>
+            <ul>
+                {% for hint in red_hints.reverse %}
+                    <li>{{ hint.clue }}: {{ hint.num_of_cards }}</li>
+                {% endfor %}
+            </ul>
+            <input type="submit" value="Red Team Hint" class="{% if turn.active_team.is_blue == False and turn.guesses_allowed == 0 %} red_turn {% endif %}">
+        </fieldset>
+    </form>
+</div>
+<script>
+    {% if turn.guesses_allowed != 0 %}
+    setInterval(reload, 5000);
+    {% endif %}
+    function reload() {
+        location.replace("/../spymaster/")
+    }
+</script>
+</body>
+</html>

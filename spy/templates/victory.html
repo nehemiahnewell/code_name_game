@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spy</title>
+    <link rel="stylesheet" type="text/css" href="{% static "css/spystyle.css" %}">
+</head>
+<body>
+<div class="blue_col">
+    <fieldset>
+        <legend>Blue Team:</legend>
+        <h2>{{ blue_team.spies_left }}</h2>
+    </fieldset>
+</div>
+<div class="game_state">
+    <fieldset class="{% if blue_team.spies_left == 0 %} %} blue_turn {% else %} red_turn {% endif %}">
+        <legend>Current team:</legend>
+        <h1>{%  if blue_team.spies_left == 0 %}
+            Blue Team WINS
+            {% else %}
+            Red Team WINS
+            {% endif %}
+        </h1>
+    </fieldset>
+</div>
+<div class="red_col">
+        <fieldset>
+            <legend>Red Team:</legend>
+            <h2>{{ red_team.spies_left }}</h2>
+        </fieldset>
+</div>
+</body>
+</html>

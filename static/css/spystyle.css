@@ -1,0 +1,147 @@
+
+input
+{
+    display: none;
+}
+body
+{
+    margin: 0;
+}
+form
+{
+    width: 80%;
+}
+form fieldset
+{
+    margin-top: 6em;
+    position: relative;
+    height: 30em;
+    width: 100%;
+}
+h2
+{
+    display: block;
+    font-size: 3em;
+    text-align: center;
+    vertical-align: middle;
+
+}
+input.red_turn,input.blue_turn
+{
+    display: inline-block;
+}
+div.blue_col h2
+{
+    box-shadow: .5em .25em .5em blue;
+    margin-right: auto;
+}
+div.red_col h2
+{
+    box-shadow: .5em .25em .5em red;
+    margin-left: auto;
+}
+input[type="submit"]
+{
+    position: absolute;
+    bottom: 1em;
+}
+table
+{
+    display: inline-block;
+    max-width: 100%;
+    background-color: black;
+    margin-top: 1em;
+}
+td
+{
+    width: 6em;
+    height: 6em;
+    background: green;
+}
+table, th, td
+{
+    border: 1px solid gold;
+}
+label
+{
+    display: inline-block;
+    width: 3em;
+}
+fieldset.blue_turn
+{
+    box-shadow: inset .5em .25em 8em blue;
+    font-variant: all-small-caps;
+}
+fieldset.red_turn
+{
+    box-shadow: inset .5em .25em 8em red;
+    font-variant: all-small-caps;
+}
+
+.blue_col
+{
+    color: #3366FF;
+    display: inline-block;
+    width: 20%;
+    margin: 0 auto;
+    vertical-align: top;
+    margin: 0 auto;
+    height: 50em;
+    background-color: lightblue;
+
+}
+.red_col
+{
+    color: #CC6666;
+    display: inline-block;
+    width: 20%;
+    margin: 0 auto;
+    vertical-align: top;
+    margin: 0 auto;
+    height: 50em;
+    background-color: lightsalmon;
+}
+.game_state
+{
+    padding: 0;
+    text-align: center;
+    display: inline-block;
+    width: 55%;
+    height: 50em;
+    margin: 0 auto;
+    border-left: .5em solid darkgoldenrod;
+    border-right: .5em solid darkgoldenrod;
+    background-color: goldenrod;
+}
+td.selected
+{
+    box-shadow: 10px 5px 5px black;
+    opacity: 0.3;
+}
+.bl
+{
+    background-color: blue;
+}
+.rd
+{
+    background-color: red;
+}
+.bg
+{
+    background-color: beige;
+}
+.bk
+{
+    background-color: black;
+    color: white;
+}
+div.blue_col form
+{
+    display: inline-block;
+    text-align: left;
+}
+div.red_col form
+{
+    display: inline-block;
+    text-align: left;
+}

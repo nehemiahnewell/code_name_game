@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %} Give a Spy A Clue {% endblock %}
+
+
+{% block main_content %}
+
+    <form id="post" method="post" novalidate>
+        <label for="post">One word Spy Clue</label>
+        <input type="text" name="spy_clue" placeholder="Help your fellow spies" required/>
+        <label for="post">Clue number?</label>
+        <input type="text"  name="spy_number" placeholder="Enter a number" required/>
+        <input class="clue" type="submit" name="submit" id="submit"
+           value="A submitting spy is a happy spy"/>
+    </form>
+
+
+{% endblock %}
